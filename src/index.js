@@ -1,15 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
+import Header from "./components/header";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src="../../logo.svg" alt="logo" className="logo" />
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      cardData: [],
+    };
+  }
+  render() {
+    return <Header />;
+  }
 }
 
 ReactDOM.render(
