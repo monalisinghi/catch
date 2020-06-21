@@ -14,6 +14,7 @@ class App extends React.Component {
       loading: true,
       headingData: {},
       cardData: [],
+      error: "",
     };
   }
 
@@ -27,11 +28,23 @@ class App extends React.Component {
     }
   }
 
+  async fetchDataFromServer() {
+    try {
+      const response = await fetch(
+        "http://catch-code-challenge.s3-website-ap-southeast-2.amazonaws.com/challenge-3/response.json"
+      );
+      return await response.json();
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: "Something went wrong, please try again later.",
+      });
+    }
+  }
+
   componentDidMount() {
-    fetch(
-      "http://catch-code-challenge.s3-website-ap-southeast-2.amazonaws.com/challenge-3/response.json"
-    )
-      .then((response) => response.json())
+    const fetchedData = this.fetchDataFromServer();
+    fetchedData
       .then((data) => {
         this.setState({
           loading: false,
@@ -54,7 +67,16 @@ class App extends React.Component {
             </div>
           </div>
         )}
-        {!this.state.loading && (
+        {this.state.error && (
+          <div className="container">
+            <div className="row">
+              <div className="col-12 text-center p-y-2">
+                <p className="error">{this.state.error}</p>
+              </div>
+            </div>
+          </div>
+        )}
+        {!this.state.loading && !this.state.error && (
           <div className="App">
             <Header />
             <div className="container">
