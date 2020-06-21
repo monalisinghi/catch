@@ -16,4 +16,19 @@ function formatAmount(amount) {
   return amount && amount.replace(/\d(?=(\d{3})+\.)/g, "$&,");
 }
 
-export { sortAscending, sortDescending, convertToDollars, formatAmount };
+async function fetchDataFromServer(url) {
+  try {
+    const response = await fetch(url);
+    return await response.json();
+  } catch (error) {
+    return null;
+  }
+}
+
+export {
+  sortAscending,
+  sortDescending,
+  convertToDollars,
+  formatAmount,
+  fetchDataFromServer,
+};

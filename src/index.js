@@ -3,7 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import Header from "./components/header";
 import ProductHeading from "./components/productHeading";
-import { sortAscending, sortDescending } from "./components/utils";
+import {
+  sortAscending,
+  sortDescending,
+  fetchDataFromServer,
+} from "./components/utils";
 import ProductFilter from "./components/productFilter";
 import ProductCard from "./components/productCard";
 
@@ -28,22 +32,11 @@ class App extends React.Component {
     }
   }
 
-  async fetchDataFromServer() {
-    try {
-      const response = await fetch(
-        "http://catch-code-challenge.s3-website-ap-southeast-2.amazonaws.com/challenge-3/response.json"
-      );
-      return await response.json();
-    } catch (error) {
-      this.setState({
-        loading: false,
-        error: "Something went wrong, please try again later.",
-      });
-    }
-  }
-
   componentDidMount() {
-    const fetchedData = this.fetchDataFromServer();
+    const fetchedData = fetchDataFromServer(
+      "http://catch-code-challenge.s3-website-ap-southeast-2.amazonaws.com/challenge-3/response.json"
+    );
+
     fetchedData
       .then((data) => {
         this.setState({
@@ -52,7 +45,12 @@ class App extends React.Component {
           cardData: sortAscending(data.results),
         });
       })
-      .catch((error) => console.log("Error: ", error));
+      .catch((error) => {
+        this.setState({
+          loading: false,
+          error: "Something went wrong, please try again later.",
+        });
+      });
   }
 
   render() {
@@ -77,7 +75,7 @@ class App extends React.Component {
           </div>
         )}
         {!this.state.loading && !this.state.error && (
-          <div className="App">
+          <div className="wrapper">
             <Header />
             <div className="container">
               <div className="row m-b-1 space-between">

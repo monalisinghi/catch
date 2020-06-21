@@ -1,12 +1,12 @@
 import React from "react";
 
 const ProductHeading = (props) => {
+  const { query, page, pages, total } = props.data;
   return (
     <div className="product-heading">
-      <h1>{props.data && props.data.query}</h1>
+      <h1>{query}</h1>
       <div className="page-count">
-        Page {props.data && props.data.page} of {props.data && props.data.pages}
-        , Total products {props.data && props.data.total}
+        Page {page} of {pages}, Total products {total}
       </div>
     </div>
   );
