@@ -1,4 +1,11 @@
 @import "./node_modules/reset-css/sass/reset";
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -6,6 +13,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
 code {
@@ -83,15 +91,143 @@ header {
   padding-bottom: 2rem;
 }
 
+.product-header {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.product-heading {
+  h1 {
+    text-transform: capitalize;
+    margin: 0;
+  }
+}
+
+select {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+.m-b-1 {
+  margin-bottom: 1rem;
+}
+
+.product {
+  display: flex;
+  width: 285px;
+  margin: 0 auto 1.5rem;
+  text-align: center;
+  position: relative;
+  align-content: center;
+}
+
+.product-card {
+  display: flex;
+  width: 100%;
+  border: 1px solid #ddd;
+  background: #fff;
+  flex-flow: column;
+  padding-bottom: 0.75rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.img-wrapper {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.img-responsive {
+  max-width: 100%;
+}
+
+.tags {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  text-align: right;
+  right: 1rem;
+  bottom: 0.5rem;
+}
+
+.sold {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1;
+  background-color: #ff9600;
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.product-data {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.product-name {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.retail-price {
+  font-size: 1rem;
+  text-decoration: line-through;
+}
+
+.sale-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+h4 {
+  margin-top: 0;
+}
+
 @media screen and (min-width: 576px) {
   .container {
     max-width: 540px;
+  }
+
+  .product {
+    width: 270px;
   }
 }
 
 @media screen and (min-width: 768px) {
   .container {
     max-width: 720px;
+  }
+
+  .col-md-6 {
+    flex: 0 0 50%;
+    position: relative;
+    max-width: 50%;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .product {
+    width: 240px;
+  }
+
+  .text-right-md {
+    text-align: right;
   }
 }
 
@@ -104,5 +240,9 @@ header {
 @media screen and (min-width: 1200px) {
   .container {
     max-width: 1140px;
+  }
+
+  .product {
+    width: 278px;
   }
 }

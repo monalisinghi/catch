@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import Header from "./components/header";
 import ProductHeading from "./components/productHeading";
+import { sortAscending, sortDescending } from "./components/utils";
+import ProductFilter from "./components/productFilter";
+import ProductCard from "./components/productCard";
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +17,16 @@ class App extends React.Component {
     };
   }
 
+  sortPrice(e) {
+    if (e.target.value === "descending") {
+      let sortedDesc = sortDescending(this.state.cardData);
+      this.setState({ cardData: sortedDesc });
+    } else {
+      let sortedDesc = sortAscending(this.state.cardData);
+      this.setState({ cardData: sortedDesc });
+    }
+  }
+
   componentDidMount() {
     fetch(
       "http://catch-code-challenge.s3-website-ap-southeast-2.amazonaws.com/challenge-3/response.json"
@@ -23,7 +36,7 @@ class App extends React.Component {
         this.setState({
           loading: false,
           headingData: data.metadata,
-          cardData: data.results,
+          cardData: sortAscending(data.results),
         });
       })
       .catch((error) => console.log("Error: ", error));
@@ -35,7 +48,7 @@ class App extends React.Component {
         {this.state.loading && (
           <div className="container">
             <div className="row">
-              <div className="col-12">
+              <div className="col-12 text-center p-y-2">
                 <div className="lds-dual-ring"></div>
               </div>
             </div>
@@ -49,6 +62,16 @@ class App extends React.Component {
                 <div className="col-md-6 col-12 m-b-1">
                   <ProductHeading data={this.state.headingData} />
                 </div>
+                <div className="col-md-6 col-12 text-right-md">
+                  <ProductFilter onFilterChange={this.sortPrice.bind(this)} />
+                </div>
+              </div>
+            </div>
+            <div className="container">
+              <div className="row">
+                {this.state.cardData.map((card, index) => (
+                  <ProductCard data={card} key={index} />
+                ))}
               </div>
             </div>
           </div>
