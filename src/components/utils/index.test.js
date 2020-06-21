@@ -3,6 +3,7 @@ import {
   formatAmount,
   sortAscending,
   sortDescending,
+  fetchDataFromServer,
 } from "./index";
 
 test("1000 cents is 10.00 dollar", () => {
@@ -44,4 +45,37 @@ test("[10, 4, 8, 2] to be sorted in Ascending order [10, 8, 4, 2]", () => {
     { salePrice: 4 },
     { salePrice: 2 },
   ]);
+});
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () =>
+      Promise.resolve({ metadata: { query: "best sellers" }, results: [] }),
+  })
+);
+
+beforeEach(() => {
+  fetch.mockClear();
+});
+
+it("Load data from server", async () => {
+  const data = await fetchDataFromServer(
+    "http://catch-code-challenge.s3-website-ap-southeast-2.amazonaws.com/challenge-3/response.json"
+  );
+
+  expect(data).toEqual({ metadata: { query: "best sellers" }, results: [] });
+  expect(fetch).toHaveBeenCalledTimes(1);
+});
+
+it("returns null when exception", async () => {
+  fetch.mockImplementationOnce(() => Promise.reject("API is down"));
+
+  const data = await fetchDataFromServer(
+    "http://catch-code-challenge.s3-website-ap-southeast-2.amazonaws.com/challenge-3/response.json"
+  );
+
+  expect(data).toEqual(null);
+  expect(fetch).toHaveBeenCalledWith(
+    "http://catch-code-challenge.s3-website-ap-southeast-2.amazonaws.com/challenge-3/response.json"
+  );
 });

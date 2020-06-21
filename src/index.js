@@ -79,10 +79,10 @@ class App extends React.Component {
             <Header />
             <div className="container">
               <div className="row m-b-1 space-between">
-                <div className="col-md-6 col-12 m-b-1">
+                <div className="col-md-6 col-12">
                   <ProductHeading data={this.state.headingData} />
                 </div>
-                <div className="col-md-6 col-12 text-right-md">
+                <div className="col-md-6 col-12 text-right-md m-t-1 align-self-end">
                   <ProductFilter onFilterChange={this.sortPrice.bind(this)} />
                 </div>
               </div>
