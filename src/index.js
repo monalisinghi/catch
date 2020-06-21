@@ -14,6 +14,8 @@ import ProductCard from "./components/productCard";
 class App extends React.Component {
   constructor(props) {
     super(props);
+
+    // Set default state
     this.state = {
       loading: true,
       headingData: {},
@@ -22,6 +24,7 @@ class App extends React.Component {
     };
   }
 
+  // handle onChange of productFilter dropdown
   sortPrice(e) {
     if (e.target.value === "descending") {
       let sortedDesc = sortDescending(this.state.cardData);
@@ -33,10 +36,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    // Fetch data from API
     const fetchedData = fetchDataFromServer(
       "http://catch-code-challenge.s3-website-ap-southeast-2.amazonaws.com/challenge-3/response.json"
     );
 
+    // Assign data to local state and handle errors if any
     fetchedData
       .then((data) => {
         this.setState({
